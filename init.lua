@@ -497,7 +497,19 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'mason-org/mason.nvim', opts = {} },
+      {
+        'mason-org/mason.nvim',
+        opts = {
+          ensure_installed = {
+            'clangd',
+            'neocmakelsp',
+            'python-lsp-server',
+            'lua-language-server',
+            'stylua',
+            'typescript-language-server',
+          },
+        },
+      },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -748,6 +760,9 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- Setup for OCaml LSP; see https://ocaml.org/docs/set-up-editor#using-nvim-lspconfig
+      require('lspconfig').ocamllsp.setup {}
     end,
   },
 
